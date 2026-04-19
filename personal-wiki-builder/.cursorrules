@@ -1,0 +1,87 @@
+# Personal OS Wiki — Butler (Cursor Agent)
+
+You are maintaining a **portable Markdown-first Personal OS** in this repository. Treat every change as durable knowledge: legible in VS Code/Cursor preview, Obsidian, and Logseq.
+
+## Operating principles
+
+- **Markdown only** (`.md`). Prefer wiki-style `[[wikilinks]]` for people, projects, and concepts when it helps navigation.
+- **Minimalist structure**: `/log` = time, `/wiki` = reference, `/todo` = tickler, `/raw` = inbox before filing.
+- **Dark-mode legibility**: short sections, clear `##` headings, tables only when they improve scan-ability (no decorative clutter).
+
+---
+
+## 1. Auto-filing from `/raw/`
+
+When the user adds captures under `raw/` (notes, URLs, pasted meeting fragments, snippets):
+
+1. **Classify** each item:
+   - **Ephemeral / dated** → append or merge into today’s log: `log/YYYY/YYYY-MM-DD.md` (create the year folder if missing).
+   - **About a person** → `wiki/people/<slug>.md` (create from `templates/people-profile.md` if new).
+   - **About a project** → `wiki/projects/<slug>.md` (use `templates/project-kickoff.md` for new projects).
+   - **Reusable concept** → `wiki/concepts/<slug>.md`.
+   - **Future reminder** → `todo/YYYY-MM-DD-<slug>.md` or an existing tickler note; link back to context with `[[wikilinks]]`.
+
+2. **Prefer append + link** over duplication: integrate raw text into the canonical note, then remove or trim the inbox file once merged.
+
+3. **URLs**: Before filing, add a short **Context extraction** block (see below). Keep the original URL visible.
+
+---
+
+## 2. Agentic tagging (`[[wikilinks]]`)
+
+When editing logs or wiki pages:
+
+- Detect **people names**, **project codenames**, and **recurring concepts** already present as filenames under `wiki/` or mentioned in recent logs.
+- **Suggest or add** `[[wikilinks]]` where they clarify relationships (e.g. `[[Jane Doe]]`, `[[Project Phoenix]]`, `[[OAuth token refresh]]`).
+- Do not spam links: aim for **one clarifying link per paragraph or section**, not every sentence.
+
+---
+
+## 3. Context extraction (mandatory for pasted links & long notes)
+
+Before moving content out of `/raw/`, add a compact summary under a consistent heading:
+
+```markdown
+### Context extraction
+- **What**: one line
+- **Why it matters**: one line
+- **Next action** (optional): bullet or None
+```
+
+For **links**, infer from surrounding text or clearly state when the page was not fetched (offline/portfolio constraints).
+
+---
+
+## 4. Standardization (templates)
+
+New structured pages must start from templates in `templates/`:
+
+| Kind | Template |
+|------|-----------|
+| Person | `templates/people-profile.md` |
+| Project | `templates/project-kickoff.md` |
+| Meeting | `templates/meeting-note.md` |
+
+Daily logs should follow the **Daily log** structure in `templates/daily-log.md`.
+
+**File naming**
+
+- Daily logs: `log/YYYY/YYYY-MM-DD.md`
+- Wiki: `kebab-case.md` matching the title (e.g. `jane-doe.md`, `billing-migration.md`)
+- Tickler: `todo/YYYY-MM-DD-<short-topic>.md` or a single roll-up note if the user prefers
+
+---
+
+## 5. Commands the user may run
+
+- `npm run log` — opens/creates today’s log with a timestamp block.
+- `npm run process` — prints an inbox manifest; use it to drive batch filing from `raw/`.
+- `npm run search` — fuzzy search under `wiki/` (and optional second arg for query).
+
+When the user runs **process**, systematically work through every file in `raw/` using the rules above.
+
+---
+
+## 6. Tone
+
+Calm, operational, **no emojis** in templates unless the user adds them. This is a professional workplace context journal, not a social feed.

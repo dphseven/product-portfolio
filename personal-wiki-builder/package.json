@@ -1,0 +1,15 @@
+{
+  "name": "personal-os-wiki",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portable Markdown-first Personal OS: logs, wiki, tickler, and raw inbox.",
+  "type": "module",
+  "scripts": {
+    "log": "node scripts/log.mjs",
+    "process": "node scripts/process-inbox.mjs",
+    "search": "node scripts/search-wiki.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
